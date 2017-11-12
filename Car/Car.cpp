@@ -21,49 +21,52 @@ Car::Car(const Car& c)
 }
 
 // get make value
-char* Car::getMake() const&
+const char* Car::getMake() const
 { 
-	char *cpy = (char*)malloc(sizeof(char) * NAME_SIZE);
-	strncpy(cpy, m_make, NAME_SIZE);
-	return cpy; 
+	return m_make;
 }
 
 // get model value
-char* Car::getModel() const&
+const char* Car::getModel() const
 {
-	char* cpy = (char*)malloc(sizeof(char) * NAME_SIZE);
-	strncpy(cpy, m_model, NAME_SIZE);
-	return cpy;
+	return m_model;
 }
 
 // get color value
-char* Car::getColor() const&
+const char* Car::getColor() const
 {
-	char *cpy = (char *)malloc(sizeof(char) * NAME_SIZE);
-	strncpy(cpy, m_color, NAME_SIZE);
-	return cpy;
+	return m_color;
 }
 
 
 // change make value
-void Car::setMake(char* make) 
+void Car::setMake(const char* make) 
 { 
-	strncpy(m_make, make, NAME_SIZE); 
-	m_make[NAME_SIZE] = '\0';
+	if (make)
+	{
+		strncpy(m_make, make, NAME_SIZE);
+		m_make[NAME_SIZE] = '\0';
+	}
 }
 
 // set model value
-void Car::setModel(char* model)
+void Car::setModel(const char* model)
 {
-	strncpy(m_model, model, NAME_SIZE);
-	m_model[NAME_SIZE] = '\0';
+	if (model)
+	{
+		strncpy(m_model, model, NAME_SIZE);
+		m_model[NAME_SIZE] = '\0';
+	}
 }
 
 // set color value
-void Car::setColor(char* color) 
+void Car::setColor(const char* color) 
 { 
-	strncpy(m_color, color, NAME_SIZE); 
-	m_color[NAME_SIZE] = '\0';
+	if (color)
+	{
+		strncpy(m_color, color, NAME_SIZE);
+		m_color[NAME_SIZE] = '\0';
+	}
 }
 
 // sat make value
@@ -102,23 +105,35 @@ ostream & operator<<(ostream & os, const Car & car)
 }
 
 // compare cars by year
-const Car* Car::compareYear(const Car * car1, const Car * car2)
+Compare Car::compareYear(const Car & car1, const Car & car2)
 {
-	const Car * result = car1;
+	Compare result = Compare::equal;
 
-	if (car1->getYear() > car2->getYear())
-		result = car2;
+	if (car1.getYear() > car2.getYear())
+	{ 
+		result = Compare::bigger;
+	}
+	else if (car1.getYear() < car2.getYear())
+	{
+		result = Compare::smaller;
+	}
 
 	return result;
 }
 
 // compare cars by engin volume
-const Car* Car::compareEnginVolume(const Car * car1, const Car * car2)
+Compare Car::compareEnginVolume(const Car & car1, const Car & car2)
 {
-	const Car * result = car1;
+	Compare result = Compare::equal;
 
-	if (car1->getEnginVolume() < car2->getEnginVolume())
-		result = car2;
+	if (car1.getEnginVolume() > car2.getEnginVolume())
+	{
+		result = Compare::bigger;
+	}
+	else if (car1.getEnginVolume() < car2.getEnginVolume())
+	{
+		result = Compare::smaller;
+	}
 
 	return result;
 }

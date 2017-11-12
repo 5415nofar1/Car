@@ -1,6 +1,11 @@
 #include <iostream>
 #include "Car.h"
 
+/*
+	Writen by Nofar Ben Harush.
+	Car exercise.
+*/
+
 
 int main()
 {
@@ -10,6 +15,7 @@ int main()
 	size_t enginVolume = 0;
 	char color[NAME_SIZE] = "";
 
+	// input car details
 	cout << "Please enter car details:" << endl;
 	cout << "Make:";
 	cin >> make;
@@ -22,22 +28,24 @@ int main()
 	cout << "Color:";
 	cin >> color;
 
+	// print cars
+	cout << endl << "------------ cars ------------" << endl;
 
 	Car car1(make, model, year, enginVolume, color);
-	cout << "\tYour car:" << endl << car1;
+	cout << "Your car:" << endl << car1;
 
 	Car car2("Ford", "Focus", 2017, 1600, "White");
-	cout << "\tSecond car:" << endl << car2;
+	cout << "Second car:" << endl << car2;
 
+	// compare cars
+	cout << endl << "--------- compare car ---------" << endl << endl;
 
-	cout << "===========" << endl;
-	cout << "The older car:" << endl;
-	const Car* older = Car::compareYear(&car1, &car2);
-	cout << *older;
+	Compare olderRst = Car::compareYear(car1, car2);
+	cout << "The older car: " << ((olderRst >= 0) ? car1 : car2) << endl;
 
-	cout << "The bigger car:" << endl;
-	const Car* bigger = Car::compareEnginVolume(&car1, &car2);
-	cout << *bigger;
+	Compare biggerRst = Car::compareEnginVolume(car1, car2);
+	cout << "The bigger car: " << ((biggerRst >= 0) ? car1 : car2) << endl;
+
 
 	return 0;
 }
